@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Optional;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
@@ -50,6 +52,8 @@ public class UserViewFacadeTest {
                 .andExpect(jsonPath("$.userId").value("12"))
                 .andExpect(jsonPath("$.name").value("name"))
                 .andReturn();
+        Optional<Long> longOptional = Optional.ofNullable(new Long(12L));
+
     }
 
 }
