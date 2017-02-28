@@ -1,0 +1,6 @@
+generated
+target
+logs
+.git
+.idea
+*.iml
