@@ -30,8 +30,8 @@ public class UserViewFacadeTest {
 
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     private ProjectionFactory projectionFactory;
 

@@ -26,6 +26,7 @@
         <spring.framework.version>4.3.3.RELEASE</spring.framework.version>
         <fasterxml.jackson.version>2.8.3</fasterxml.jackson.version>
         <hibernate.version>5.0.11.Final</hibernate.version>
+        <cucumber.version>1.2.5</cucumber.version>
     </properties>
 
 
@@ -33,6 +34,7 @@
     <modules>
         <module>components</module>
         <module>build-artifacts</module>
+        <module>autotests</module>
         <!--<module>web-application</module>-->
         <!--<module>acceptance-tests</module>-->
         <!--<module>tools</module>-->

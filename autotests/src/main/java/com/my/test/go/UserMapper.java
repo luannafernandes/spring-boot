@@ -1,7 +1,5 @@
-package com.my.temp.data.mappers;
+package com.my.test.go;
 
-import com.my.temp.data.dto.ImmutableUser;
-import com.my.temp.data.dto.User;
 import org.json.JSONObject;
 
 public interface UserMapper {
@@ -10,7 +8,6 @@ public interface UserMapper {
         return ImmutableUser.builder()
                 .userId(Integer.valueOf(user.getString("userId")))
                 .name(user.getString("name"))
-                .address(user.getString("address"))
                 .build();
     }
 }
