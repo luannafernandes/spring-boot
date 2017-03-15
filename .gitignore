@@ -1,5 +1,7 @@
 .idea/*
 **/target/
+**/app_data/
+**/app_log/
 *.iml
 .ida_modules/
 node_modules/

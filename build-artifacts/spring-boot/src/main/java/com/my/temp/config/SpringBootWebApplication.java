@@ -19,9 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //@EnableJpaRepositories("com.epam.csd.services")
 //@ImportResource("classpath:securityContext.xml")
 public class SpringBootWebApplication extends SpringBootServletInitializer {
-
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SpringBootWebApplication.class, args);
     }
-
 }

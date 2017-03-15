@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+   app:
+     container_name: app
+     build: ./app
+     volumes:
+       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+       - ./app_log:/app/log/
+     ports:
+       - "18080:8080"
+   app2:
+     container_name: app-2
+     image: docker_app
+     volumes:
+       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+       - ./app_log:/app/log/
+     ports:
+       - "28080:8080"
+
+   app-db:
+     container_name: app-db
+     image: mysql:5.7
+     volumes:
+       - ./app_data:/var/lib/mysql
+     ports:
+       - "13306:3306"
+     environment:
+       MYSQL_ROOT_PASSWORD: wordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+
+
+
+#services:
+#  myapp2:
+#    image: "docker_app"
+#  myapp3:
+#    image: "docker_app"
+#  myapp4:
+#    image: "docker_app"
+#  myapp5:
+#    image: "docker_app"
+#depends_on:
+#       - db

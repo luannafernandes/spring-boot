@@ -34,10 +34,8 @@
     <modules>
         <module>components</module>
         <module>build-artifacts</module>
-        <module>autotests</module>
-        <!--<module>web-application</module>-->
-        <!--<module>acceptance-tests</module>-->
-        <!--<module>tools</module>-->
+        <!--<module>autotests</module>-->
+        <module>docker</module>
     </modules>
 
 

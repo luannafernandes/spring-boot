@@ -1,0 +1,13 @@
+docker image
+docker ps
+docker-compose
+
+# Delete all containers
+docker rm -f$(docker ps -a -q)
+
+# Delete all images
+docker rmi -f $(docker images -q)
+
+docker build --tag=fedora-postgresql Fedora-Dockerfiles/postgresql
+docker build --rm -t csd-app csd-app
+docker build --rm -t csd-apache csd-apache
