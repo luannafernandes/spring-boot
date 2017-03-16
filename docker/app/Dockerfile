@@ -9,5 +9,6 @@ RUN java -version
 
 EXPOSE 8080
 
+#CMD ["java", "-version"]
 CMD ["java", "-jar", "/app/mvc-app.war", "&>>", "/app/log/csd-console.log &"]
 

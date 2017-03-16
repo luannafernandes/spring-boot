@@ -1,37 +1,61 @@
-version: '2'
+version: '3'
 
 services:
+#   app1:
+#     container_name: app1
+#     build: ./app
+#     volumes:
+#       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+#       - ./app_log:/app/log/
+#     ports:
+#       - "18080:8080"
+
    app:
      container_name: app
-     build: ./app
+     image: lwieske/java-8:server-jre-8u121-slim
      volumes:
        - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
        - ./app_log:/app/log/
      ports:
        - "18080:8080"
-   app2:
-     container_name: app-2
-     image: docker_app
-     volumes:
-       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
-       - ./app_log:/app/log/
-     ports:
-       - "28080:8080"
+     command: ["java", "-jar", "/app/mvc-app.war", "&>>", "/app/log/csd-console.log &"]
 
-   app-db:
-     container_name: app-db
-     image: mysql:5.7
-     volumes:
-       - ./app_data:/var/lib/mysql
-     ports:
-       - "13306:3306"
-     environment:
-       MYSQL_ROOT_PASSWORD: wordpress
-       MYSQL_DATABASE: wordpress
-       MYSQL_USER: wordpress
-       MYSQL_PASSWORD: wordpress
+#FROM lwieske/java-8:server-jre-8u121-slim
+#EXPOSE 8080
+#CMD ["java", "-jar", "/app/mvc-app.war", "&>>", "/app/log/csd-console.log &"]
 
 
+#   app2:
+#     container_name: app2
+#     image: app
+#     volumes:
+#       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+#       - ./app_log:/app/log/
+#     ports:
+#       - "28080:8080"
+
+#   bal:
+#     container_name: bal
+#     image: scazadar/apachejk
+#     links:
+#       - 'app1:'
+#     volumes:
+#      - ./balancer/workers.properties:/etc/libapache2-mod-jk/workers.properties
+#     ports:
+#       - "180:80"
+
+#   app-db:
+#     container_name: app-db
+#     image: mysql:5.7
+#     volumes:
+#       - ./app_data:/var/lib/mysql
+#     ports:
+#       - "13306:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: wordpress
+#       MYSQL_DATABASE: wordpress
+#       MYSQL_USER: wordpress
+#       MYSQL_PASSWORD: wordpress
 
 #services:
 #  myapp2:
