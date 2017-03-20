@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>mvc</artifactId>
-        <groupId>com.my.temp</groupId>
+        <groupId>com.myproj</groupId>
         <version>0.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.my.temp</groupId>
+    <groupId>com.myproj</groupId>
     <artifactId>autotests</artifactId>
     <version>0.5-SNAPSHOT</version>
 
@@ -15,7 +15,7 @@
 
     <dependencies>
         <!--<dependency>-->
-            <!--<groupId>com.my.temp</groupId>-->
+            <!--<groupId>com.myproj</groupId>-->
             <!--<artifactId>spring-boot</artifactId>-->
             <!--<version>${project.version}</version>-->
         <!--</dependency>-->

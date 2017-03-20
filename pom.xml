@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.my.temp</groupId>
+    <groupId>com.myproj</groupId>
     <artifactId>mvc</artifactId>
     <packaging>pom</packaging>
     <version>0.5-SNAPSHOT</version>
@@ -29,13 +29,10 @@
         <cucumber.version>1.2.5</cucumber.version>
     </properties>
 
-
-
     <modules>
-        <module>components</module>
-        <module>build-artifacts</module>
+        <module>data-layer</module>
+        <module>middle-layer</module>
         <!--<module>autotests</module>-->
-        <module>docker</module>
     </modules>
 
 

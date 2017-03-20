@@ -6,6 +6,7 @@
 .ida_modules/
 node_modules/
 *.log
+mvc-app.war
 .project
 .classpath
 .launch

@@ -1,0 +1,102 @@
+version: '3'
+
+services:
+
+   app1:
+     container_name: app1
+     image: lwieske/java-8:server-jre-8u121-slim
+     volumes:
+       - ./mvc-app.war:/app/mvc-app.war
+#       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+       - ./app_log:/app/log/
+#     ports:
+#       - "18080:8080"
+     command: ["java", "-jar", "/app/mvc-app.war", "&>>", "/app/log/csd-console.log &"]
+
+   app2:
+     container_name: app2
+     image: lwieske/java-8:server-jre-8u121-slim
+     volumes:
+       - ./mvc-app.war:/app/mvc-app.war
+#       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+       - ./app_log:/app/log/
+#     ports:
+#       - "28080:8080"
+     command: ["java", "-jar", "/app/mvc-app.war", "&>>", "/app/log/csd-console.log &"]
+
+   bal:
+#   https://www.nginx.com/resources/wiki/start/topics/examples/full/
+     container_name: bal
+     image: nginx:1.10.3
+     depends_on:
+      - app1
+      - app2
+     volumes:
+       - ./nginx/my.conf:/etc/nginx/nginx.conf
+     ports:
+       - "80:80"
+
+
+
+#   app1:
+#     container_name: app1
+#     image: httpd:2.4
+##     ports:
+##       - "91:80"
+#
+#   app2:
+#     container_name: app2
+#     image: httpd:2.4
+##     ports:
+##       - "91:80"
+
+
+
+#FROM lwieske/java-8:server-jre-8u121-slim
+#EXPOSE 8080
+#CMD ["java", "-jar", "/app/mvc-app.war", "&>>", "/app/log/csd-console.log &"]
+
+
+#   app2:
+#     container_name: app2
+#     image: app
+#     volumes:
+#       - ../build-artifacts/spring-boot/target/mvc-app.war:/app/mvc-app.war
+#       - ./app_log:/app/log/
+#     ports:
+#       - "28080:8080"
+
+#   bal:
+#     container_name: bal
+#     image: scazadar/apachejk
+#     links:
+#       - 'app1:'
+#     volumes:
+#      - ./balancer/workers.properties:/etc/libapache2-mod-jk/workers.properties
+#     ports:
+#       - "180:80"
+
+#   app-db:
+#     container_name: app-db
+#     image: mysql:5.7
+#     volumes:
+#       - ./app_data:/var/lib/mysql
+#     ports:
+#       - "13306:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: wordpress
+#       MYSQL_DATABASE: wordpress
+#       MYSQL_USER: wordpress
+#       MYSQL_PASSWORD: wordpress
+
+#services:
+#  myapp2:
+#    image: "docker_app"
+#  myapp3:
+#    image: "docker_app"
+#  myapp4:
+#    image: "docker_app"
+#  myapp5:
+#    image: "docker_app"
+#depends_on:
+#       - db
