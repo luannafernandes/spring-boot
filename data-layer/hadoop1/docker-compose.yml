@@ -1,0 +1,125 @@
+version: '3'
+
+services:
+
+    ganglia:
+      container_name: ganglia
+      image: wookietreiber/ganglia
+      hostname: ganglia
+      domainname: hadoop
+      ports:
+        - "80:80"
+      expose:
+        - "80"
+
+    namenode:
+      image: uhopper/hadoop-namenode
+      container_name: namenode
+      hostname: namenode
+      domainname: hadoop
+      depends_on:
+        - ganglia
+      volumes:
+        - "./namenode:/hadoop/dfs/name"
+      environment:
+        - GANGLIA_HOST=ganglia
+        - CLUSTER_NAME=myclaster
+      expose:
+        - "22"
+        - "8020"
+        - "50070"
+        - "50470"
+      ports:
+        - "50070:50070"
+        - "8020:8020"
+
+    datanode1:
+      image: uhopper/hadoop-datanode
+      hostname: datanode1
+      container_name: datanode1
+      domainname: hadoop
+      volumes:
+        - "./datanode1:/hadoop/dfs/data"
+      expose:
+        - "50010"
+        - "50075"
+        - "45823"
+        - "50020"
+#      ports:
+#        - "50010:50010"
+#        - "50075:50075"
+#        - "50020:50020"
+      environment:
+        - GANGLIA_HOST=ganglia
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+
+    datanode2:
+      image: uhopper/hadoop-datanode
+      hostname: datanode2
+      container_name: datanode2
+      domainname: hadoop
+      volumes:
+        - "./datanode2:/hadoop/dfs/data"
+      expose:
+        - "50010"
+        - "50075"
+        - "45823"
+        - "50020"
+      environment:
+        - GANGLIA_HOST=ganglia
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+
+    datanode3:
+      image: uhopper/hadoop-datanode
+      hostname: datanode3
+      container_name: datanode3
+      domainname: hadoop
+      volumes:
+        - "./datanode3:/hadoop/dfs/data"
+      expose:
+        - "50010"
+        - "50075"
+        - "45823"
+        - "50020"
+      environment:
+        - GANGLIA_HOST=ganglia
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+
+    resourcemanager:
+      image: uhopper/hadoop-resourcemanager
+      hostname: resourcemanager
+      container_name: resourcemanager
+      domainname: hadoop
+      depends_on:
+        - namenode
+        - ganglia
+      environment:
+        - GANGLIA_HOST=ganglia
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+        - YARN_CONF_yarn_log___aggregation___enable=true
+      ports:
+        - "8033:8033"
+
+    nodemanager1:
+      image: uhopper/hadoop-nodemanager
+      hostname: nodemanager1
+      container_name: nodemanager1
+      domainname: hadoop
+      environment:
+        - GANGLIA_HOST=ganglia
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+        - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+#        - YARN_CONF_yarn_log___aggregation___enable=true
+#        - YARN_CONF_yarn_nodemanager_remote___app___log___dir=/app-logs
+
+#    spark:
+#      image: uhopper/hadoop-spark
+#      hostname: spark
+#      container_name: spark
+#      domainname: hadoop
+#        net: hadoop
+#      environment:
+#        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+#          - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+#      command: tail -f /var/log/dmesg
+

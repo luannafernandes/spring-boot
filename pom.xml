@@ -32,7 +32,7 @@
     <modules>
         <module>data-layer</module>
         <module>middle-layer</module>
-        <!--<module>autotests</module>-->
+        <module>autotests</module>
     </modules>
 
 

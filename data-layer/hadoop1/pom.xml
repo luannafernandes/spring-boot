@@ -6,17 +6,13 @@
 
     <parent>
         <groupId>com.myproj</groupId>
-        <artifactId>mvc</artifactId>
+        <artifactId>data-layer</artifactId>
         <version>0.5-SNAPSHOT</version>
     </parent>
 
     <groupId>com.myproj</groupId>
-    <artifactId>data-layer</artifactId>
+    <artifactId>hadoop1</artifactId>
     <version>0.5-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>hadoop1</module>
-    </modules>
-
+    
 </project>
