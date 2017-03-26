@@ -1,4 +1,4 @@
-package com.myproj.config;
+package com.myproj.hadoop;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.springframework.context.annotation.Configuration;

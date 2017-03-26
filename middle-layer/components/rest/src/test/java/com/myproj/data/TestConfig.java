@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @TestConfiguration
 @SpringBootConfiguration
-@ComponentScan(basePackages = {"com.myproj"}, excludeFilters = @ComponentScan.Filter(pattern = "com.myproj.config.SpringBootWebApplication", type = FilterType.REGEX))
+@ComponentScan(basePackages = {"com.myproj"}, excludeFilters = @ComponentScan.Filter(pattern = "com.myproj.hadoop.SpringBootWebApplication", type = FilterType.REGEX))
 @PropertySources(value = {@PropertySource("classpath:application-test.properties")})
 public class TestConfig {
 

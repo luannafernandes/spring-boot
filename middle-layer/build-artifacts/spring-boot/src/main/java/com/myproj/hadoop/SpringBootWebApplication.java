@@ -1,4 +1,4 @@
-package com.myproj.config;
+package com.myproj.hadoop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;

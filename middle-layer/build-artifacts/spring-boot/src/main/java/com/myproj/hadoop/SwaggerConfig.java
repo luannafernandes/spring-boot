@@ -1,4 +1,4 @@
-package com.myproj.config;
+package com.myproj.hadoop;
 
 import com.fasterxml.classmate.TypeResolver;
 import org.joda.time.LocalDate;
