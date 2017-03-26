@@ -4,6 +4,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -17,15 +18,13 @@ import java.util.StringTokenizer;
 public class WordCount {
 
     public static class TokenizerMapper
-            extends Mapper<IntWritable, Text, Text, IntWritable> {
+            extends Mapper<LongWritable, Text,  IntWritable, Text>{
 
-        //        private final static IntWritable one = new IntWritable(1);
-//        private Text word = new Text();
-
-        public void map(IntWritable key, Text value, Context context
+        public void map(LongWritable key, Text value, Context context
         ) throws IOException, InterruptedException {
+
             StringTokenizer itr = new StringTokenizer(value.toString());
-            //        private final static IntWritable one = new IntWritable(1);
+
             String maxWord = "";
 
             while (itr.hasMoreTokens()) {
@@ -34,23 +33,30 @@ public class WordCount {
                     maxWord=nextWorld;
                 }
             }
-            context.write(new Text(maxWord), new IntWritable(maxWord.length()));
+            context.write(new IntWritable(1), new Text(maxWord));
         }
+
     }
 
     public static class IntSumReducer
-            extends Reducer<Text, IntWritable, Text, IntWritable> {
+            extends Reducer<IntWritable,Text,IntWritable,Text> {
         private IntWritable result = new IntWritable();
 
-        public void reduce(Text key, Iterable<IntWritable> values,
+        public void reduce(IntWritable key, Iterable<Text> values,
                            Context context
         ) throws IOException, InterruptedException {
-            int sum = 0;
-            for (IntWritable val : values) {
-                sum = val.get();
+// TODO: code dublicate
+
+            System.out.println("asdf asdf asd !!!!!!!!"+key.toString());
+            String maxWord = "";
+            for (Text val : values) {
+                if(maxWord.length() < val.toString().length()){
+                    maxWord=val.toString();
+                }
             }
-            result.set(sum);
-            context.write(key, result);
+//            context.write(new Text(maxWord), new IntWritable(maxWord.length()));
+            context.write(new IntWritable(maxWord.length()),new Text(maxWord));
+//
         }
     }
 
@@ -66,8 +72,12 @@ public class WordCount {
         job.setMapperClass(TokenizerMapper.class);
         job.setCombinerClass(IntSumReducer.class);
         job.setReducerClass(IntSumReducer.class);
+
+        job.setMapOutputKeyClass(IntWritable.class);
+        job.setMapOutputValueClass(Text.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileSystem.get(conf).delete(new Path(args[1]), true);
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
