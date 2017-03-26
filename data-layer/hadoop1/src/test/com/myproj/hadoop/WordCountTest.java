@@ -30,22 +30,49 @@ public class WordCountTest {
 
     @Test
     public void testMapper() throws IOException {
+//        public void addAll(final List<Pair<K1, V1>> inputs) {
         mapDriver.withInput(new IntWritable(), new Text("Hallow world world"));
         List<Pair<Text, IntWritable>> outputRecords = new ArrayList<>();
-        outputRecords.add(new Pair<>(new Text("Hallow"), new IntWritable(1)));
-        outputRecords.add(new Pair<>(new Text("world"), new IntWritable(1)));
-        outputRecords.add(new Pair<>(new Text("world"), new IntWritable(1)));
+        outputRecords.add(new Pair<>(new Text("Hallow"), new IntWritable(6)));
+        outputRecords.add(new Pair<>(new Text("world"), new IntWritable(5)));
+        outputRecords.add(new Pair<>(new Text("world"), new IntWritable(5)));
+        mapDriver.withAllOutput(outputRecords);
+        mapDriver.runTest();
+    }
+
+    @Test
+    public void testMultipleMapper() throws IOException {
+        List<Pair<IntWritable, Text>> inputs = new ArrayList<>();
+        inputs.add(new Pair(new IntWritable(), new Text("Hallow world worl")));
+        inputs.add(new Pair(new IntWritable(), new Text("a bb ccc")));
+        inputs.add(new Pair(new IntWritable(), new Text("dddd eeeee ffffff")));
+        mapDriver.addAll(inputs);
+        List<Pair<Text, IntWritable>> outputRecords = new ArrayList<>();
+        outputRecords.add(new Pair<>(new Text("Hallow"), new IntWritable(6)));
+        outputRecords.add(new Pair<>(new Text("ccc"), new IntWritable(3)));
+        outputRecords.add(new Pair<>(new Text("ffffff"), new IntWritable(6)));
         mapDriver.withAllOutput(outputRecords);
         mapDriver.runTest();
     }
 
     @Test
     public void testReducer() throws IOException {
-        List<IntWritable> values = new ArrayList<IntWritable>();
-        values.add(new IntWritable(1));
-        values.add(new IntWritable(1));
-        reduceDriver.withInput(new Text("world"), values);
-        reduceDriver.withOutput(new Text("world"), new IntWritable(2));
+        List<IntWritable> values1 = new ArrayList<IntWritable>();
+        values1.add(new IntWritable(5));
+        values1.add(new IntWritable(5));
+        Pair<Text, List<IntWritable>> pair1 = new Pair<>(new Text("world"),values1);
+
+        List<IntWritable> values2 = new ArrayList<IntWritable>();
+        values2.add(new IntWritable(6));
+        values2.add(new IntWritable(6));
+        Pair<Text, List<IntWritable>> pair2 = new Pair<>(new Text("Hallow"),values2);
+
+        List<Pair<Text, List<IntWritable>>> inputs = new ArrayList<>();
+        inputs.add(pair1);
+        inputs.add(pair2);
+
+        reduceDriver.withAll(inputs);
+        reduceDriver.withOutput(new Text("Hallow"), new IntWritable(6));
         reduceDriver.runTest();
     }
 

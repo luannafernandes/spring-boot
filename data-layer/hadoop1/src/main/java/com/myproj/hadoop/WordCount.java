@@ -19,16 +19,22 @@ public class WordCount {
     public static class TokenizerMapper
             extends Mapper<IntWritable, Text, Text, IntWritable> {
 
-        private final static IntWritable one = new IntWritable(1);
-        private Text word = new Text();
+        //        private final static IntWritable one = new IntWritable(1);
+//        private Text word = new Text();
 
         public void map(IntWritable key, Text value, Context context
         ) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString());
+            //        private final static IntWritable one = new IntWritable(1);
+            String maxWord = "";
+
             while (itr.hasMoreTokens()) {
-                word.set(itr.nextToken());
-                context.write(word, one);
+                String nextWorld = itr.nextToken();
+                if(maxWord.length() < nextWorld.length()){
+                    maxWord=nextWorld;
+                }
             }
+            context.write(new Text(maxWord), new IntWritable(maxWord.length()));
         }
     }
 
@@ -41,7 +47,7 @@ public class WordCount {
         ) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable val : values) {
-                sum += val.get();
+                sum = val.get();
             }
             result.set(sum);
             context.write(key, result);
