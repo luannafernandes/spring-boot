@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WordCount {
 
@@ -38,7 +39,7 @@ public class WordCount {
 
     }
 
-    public static class IntSumReducer
+    public static class Combiner
             extends Reducer<IntWritable,Text,IntWritable,Text> {
         private IntWritable result = new IntWritable();
 
@@ -46,8 +47,29 @@ public class WordCount {
                            Context context
         ) throws IOException, InterruptedException {
 // TODO: code dublicate
+            AtomicInteger ai;
 
-            System.out.println("asdf asdf asd !!!!!!!!"+key.toString());
+            String maxWord = "";
+            for (Text val : values) {
+                if(maxWord.length() < val.toString().length()){
+                    maxWord=val.toString();
+                }
+            }
+            context.write(new IntWritable(1),new Text(maxWord));
+//
+        }
+    }
+
+    public static class IntSumReducer
+            extends Reducer<IntWritable,Text,Text,IntWritable> {
+        private IntWritable result = new IntWritable();
+
+        public void reduce(IntWritable key, Iterable<Text> values,
+                           Context context
+        ) throws IOException, InterruptedException {
+// TODO: code dublicate
+            AtomicInteger ai;
+
             String maxWord = "";
             for (Text val : values) {
                 if(maxWord.length() < val.toString().length()){
@@ -55,7 +77,7 @@ public class WordCount {
                 }
             }
 //            context.write(new Text(maxWord), new IntWritable(maxWord.length()));
-            context.write(new IntWritable(maxWord.length()),new Text(maxWord));
+            context.write(new Text(maxWord),new IntWritable(maxWord.length()));
 //
         }
     }
@@ -70,7 +92,7 @@ public class WordCount {
         Job job = Job.getInstance(conf, "word count");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(TokenizerMapper.class);
-        job.setCombinerClass(IntSumReducer.class);
+        job.setCombinerClass(Combiner.class);
         job.setReducerClass(IntSumReducer.class);
 
         job.setMapOutputKeyClass(IntWritable.class);
