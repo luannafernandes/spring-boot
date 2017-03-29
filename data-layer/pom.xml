@@ -17,6 +17,7 @@
 
     <modules>
         <module>hadoop1</module>
+        <module>hadoop2</module>
     </modules>
 
 </project>
