@@ -3,6 +3,7 @@ package com.myproj.hadoop;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.server.namenode.Content;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -15,8 +16,11 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class WordCount {
+
+    public static final IntWritable KEY = new IntWritable(1);
 
     public static class TokenizerMapper
             extends Mapper<LongWritable, Text,  IntWritable, Text>{
@@ -34,7 +38,7 @@ public class WordCount {
                     maxWord=nextWorld;
                 }
             }
-            context.write(new IntWritable(1), new Text(maxWord));
+            context.write(KEY, new Text(maxWord));
         }
 
     }
@@ -47,15 +51,18 @@ public class WordCount {
                            Context context
         ) throws IOException, InterruptedException {
 // TODO: code dublicate
-            AtomicInteger ai;
+            final AtomicReference<String> maxWord = new AtomicReference<>("");
 
-            String maxWord = "";
-            for (Text val : values) {
-                if(maxWord.length() < val.toString().length()){
-                    maxWord=val.toString();
-                }
-            }
-            context.write(new IntWritable(1),new Text(maxWord));
+            values.forEach(val -> {if(maxWord.get().length() < val.toString().length()){
+                maxWord.set(val.toString());
+            }});
+////            String maxWord = "";
+//            for (Text val : values) {
+//                if(maxWord.length() < val.toString().length()){
+//                    maxWord=val.toString();
+//                }
+//            }
+            context.write(KEY,new Text(maxWord.get()));
 //
         }
     }

@@ -6,6 +6,8 @@ import org.apache.hadoop.fs.Path;
 
 import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class FileOperations {
 
@@ -59,12 +61,15 @@ public class FileOperations {
     static String to = "/user/dumin/ae.log";
     static String dir = "Test1";
 
-    public static void mdain(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         FileOperations fo = new FileOperations();
         fo.mkdir(dir);
         fo.delete(dir, true);
 //        fo.delete(to,true);
         fo.copyFromLocalFile(from, to);
+        Map a;
+        List b;
+//        b.stream().map().reduce()
     }
 
 //    public static void m1ain(String[] args) throws Exception {
