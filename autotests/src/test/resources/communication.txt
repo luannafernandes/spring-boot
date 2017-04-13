@@ -1,0 +1,10 @@
+Identify the flow process of the delivery
+Kanban
+on your project, look what paramerters are applicable for you
+term of control (SLA, cycle time and etc.)
+- WIP no more then quantity of people responsible for pipeline.
+- deploy on prod every two weeks
+- current SLA from idea to development phase - two weeks
+- current SLA from development to production three weeks
+
+Discuss with mentor result of your work.
