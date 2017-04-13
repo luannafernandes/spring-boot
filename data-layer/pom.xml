@@ -18,6 +18,8 @@
     <modules>
         <module>hadoop1</module>
         <module>hadoop2</module>
+        <module>hive1</module>
+        <module>hive3</module>
     </modules>
 
 </project>

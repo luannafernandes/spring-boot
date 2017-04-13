@@ -56,7 +56,6 @@ public class WADLControllerV2 {
         Map<RequestMappingInfo, HandlerMethod> handletMethods = handlerMapping.getHandlerMethods();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handletMethods.entrySet()) {
 
-
             HandlerMethod handlerMethod = entry.getValue();
 
             Object object = handlerMethod.getBean();

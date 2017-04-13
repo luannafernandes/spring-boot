@@ -59,7 +59,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.myproj.hadoop.WordCount</mainClass>
+                            <mainClass>com.myproj.hadoop.Splitter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

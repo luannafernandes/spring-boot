@@ -19,7 +19,7 @@ public class FileOperations {
 
         myConf.set("dfs.permissions.enabled", "false");
         myConf.set("dfs.web.ugi", "webuser,webgroup");
-        myConf.set("fs.defaultFS", "hdfs://localhost:8020");
+        myConf.set("fs.defaultFS", "webhdfs://localhost:8020");
         myConf.set("fs.hdfs.impl",
                 org.apache.hadoop.hdfs.DistributedFileSystem.class.getName()
         );
