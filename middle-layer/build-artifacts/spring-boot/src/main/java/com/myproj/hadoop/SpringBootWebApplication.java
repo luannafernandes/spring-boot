@@ -13,8 +13,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 @EnableConfigurationProperties
 @EnableScheduling
-@ComponentScan(basePackages = {"com"})
-@Import(SwaggerConfig.class)
+@ComponentScan(basePackages = {"com.myproj"})
+//@Import(SwaggerConfig.class)
 //@EntityScan(basePackages = { "com.epam.csd.domain" })
 //@EnableJpaRepositories("com.epam.csd.services")
 //@ImportResource("classpath:securityContext.xml")

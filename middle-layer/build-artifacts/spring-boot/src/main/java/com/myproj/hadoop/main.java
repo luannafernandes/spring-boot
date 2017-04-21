@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class main extends SpringBootServletInitializer {
 
-    public  void main(String[] args) throws Exception {
+    public  void maine(String[] args) throws Exception {
         String name;
 
 

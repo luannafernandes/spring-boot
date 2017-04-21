@@ -24,7 +24,7 @@ public class MvcRestClient {
             Client client = Client.create();
 
             WebResource webResource = client
-                    .resource("http://localhost:80/user/" + userId);
+                    .resource("http://localhost:8080/user/" + userId);
 
             ClientResponse response = webResource.accept("application/json")
                     .get(ClientResponse.class);
